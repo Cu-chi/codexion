@@ -22,7 +22,7 @@ clean:
 	rm -rf $(OBJ_DIR)
 	rm -f $(DEP)
 
-fclean:
+fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
