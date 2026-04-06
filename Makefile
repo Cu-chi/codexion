@@ -3,7 +3,8 @@ CFLAGS = -Wall -Wextra -Werror -pthread
 NAME = codexion
 INCLUDES = coders
 
-SRCS = main.c
+SRCS = main.c \
+	parsing.c
 OBJ_DIR = objs/
 OBJS =$(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
 DEP = $(OBJS:.o=.d)
