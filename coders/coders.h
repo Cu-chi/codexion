@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   coders.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/06 11:06:59 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/07 16:39:33 by equentin         ###   ########.fr       */
+/*   Created: 2026/04/06 15:35:35 by equentin          #+#    #+#             */
+/*   Updated: 2026/04/07 16:43:45 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "coders/coders.h"
-#include "coders/dongles.h"
-#include "coders/codexion.h"
-#include "coders/parsing.h"
-#include <stdio.h>
+#ifndef CODERS_H
+# define CODERS_H
+# include "dongles.h"
 
-int	main(int ac, char **av)
+typedef struct s_coder
 {
-	t_parsed	parsed;
-	t_data		data;
+	int				id;
+	size_t			last_compile;
+	int				state;
+	t_dongle		*dongle_left;
+	t_dongle		*dongle_right;
+}					t_coder;
 
-	if (parse(&parsed, ac, av))
-		return (1);
-	data.parsed = &parsed;
-	init_dongles(&data);
-
-	destroy_dongles(&data, data.parsed->number_of_coders * 2);
-	return (0);
-}
+#endif
