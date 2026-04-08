@@ -6,12 +6,13 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 16:22:18 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/07 16:39:55 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/08 11:01:15 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "coders/coders.h"
 #include "coders/codexion.h"
+#include "coders/dongles.h"
 
 void	destroy_dongles(t_data *data, int destroy_lim)
 {
@@ -29,11 +30,10 @@ void	*init_dongles(t_data *data)
 	int	i;
 
 	i = 0;
-	data->dongles = malloc(sizeof(t_dongle) * data->parsed->number_of_coders
-			* 2);
+	data->dongles = malloc(sizeof(t_dongle) * data->parsed->number_of_coders);
 	if (data->dongles == NULL)
 		return (NULL);
-	while (i < data->parsed->number_of_coders * 2)
+	while (i < data->parsed->number_of_coders)
 	{
 		if (pthread_mutex_init(&data->dongles[i].mutex, NULL) != 0)
 		{

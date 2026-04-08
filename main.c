@@ -26,6 +26,7 @@ int	main(int ac, char **av)
 	data.parsed = &parsed;
 	init_dongles(&data);
 
-	destroy_dongles(&data, data.parsed->number_of_coders * 2);
+	destroy_dongles(&data, data.parsed->number_of_coders);
+	free(data.coders);
 	return (0);
 }
