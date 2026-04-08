@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 12:48:39 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/06 12:56:45 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/08 12:49:12 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 typedef struct s_parsed
 {
 	int		number_of_coders;
+	int		number_of_dongles;
 	int		time_to_burnout;
 	int		time_to_compile;
 	int		time_to_debug;

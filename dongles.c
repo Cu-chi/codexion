@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 16:22:18 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/08 11:01:15 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/08 12:53:01 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void	*init_dongles(t_data *data)
 	int	i;
 
 	i = 0;
-	data->dongles = malloc(sizeof(t_dongle) * data->parsed->number_of_coders);
+	data->dongles = malloc(sizeof(t_dongle) * data->parsed->number_of_dongles);
 	if (data->dongles == NULL)
 		return (NULL);
-	while (i < data->parsed->number_of_coders)
+	while (i < (data->parsed->number_of_dongles))
 	{
 		if (pthread_mutex_init(&data->dongles[i].mutex, NULL) != 0)
 		{

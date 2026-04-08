@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 12:48:27 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/06 13:42:18 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/08 12:52:41 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	validate(t_parsed *parsed)
 		fprintf(stderr, "Invalid value, scheduler must be 'fifo' or 'edf'\n");
 		return (1);
 	}
+	parsed->number_of_dongles = parsed->number_of_coders
+		+ (parsed->number_of_coders == 1);
 	return (0);
 }
 
