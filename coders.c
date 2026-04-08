@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 10:47:38 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/08 11:14:29 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/08 14:00:48 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,9 @@ void	*init_coders(t_data *data)
 	int	i;
 	int	left_dongle_index;
 	int	right_dongle_index;
-    int one_coder;
 
 	i = 0;
-    one_coder = data->parsed->number_of_coders == 1;
-	left_dongle_index = data->parsed->number_of_coders - 1 + one_coder;
+	left_dongle_index = data->parsed->number_of_dongles - 1;
 	right_dongle_index = 0;
 	data->coders = malloc(sizeof(t_coder) * data->parsed->number_of_coders);
 	if (data->coders == NULL)
@@ -33,6 +31,8 @@ void	*init_coders(t_data *data)
 		data->coders[i].id = i + 1;
 		data->coders[i].dongle_left = &data->dongles[left_dongle_index];
 		data->coders[i].dongle_right = &data->dongles[right_dongle_index];
+		data->coders[i].last_compile = 0;
+		data->coders[i].number_of_compilation = 0;
 		left_dongle_index++;
 		right_dongle_index++;
 		if (left_dongle_index >= data->parsed->number_of_coders)
