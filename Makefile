@@ -6,7 +6,8 @@ INCLUDES = coders
 SRCS = main.c \
 	parsing.c \
 	dongles.c \
-	coders.c
+	coders.c \
+	utils.c
 OBJ_DIR = objs/
 OBJS =$(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
 DEP = $(OBJS:.o=.d)
@@ -33,3 +34,4 @@ re: fclean all
 .PHONY: all clean fclean re
 
 -include $(DEP)
+# todo: rebuild on header change

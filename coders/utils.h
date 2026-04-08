@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dongles.h                                          :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/07 16:22:35 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/08 16:25:06 by equentin         ###   ########.fr       */
+/*   Created: 2026/04/08 14:45:53 by equentin          #+#    #+#             */
+/*   Updated: 2026/04/08 16:43:25 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DONGLES_H
-# define DONGLES_H
-# include "codexion.h"
-# include <pthread.h>
-# include <stdlib.h>
+#ifndef UTILS_H
+# define UTILS_H
+# include <sys/time.h>
+# include <unistd.h>
 
-typedef struct s_data	t_data;
-
-typedef struct s_dongle
-{
-	size_t				last_use;
-	pthread_mutex_t		mutex;
-}						t_dongle;
-
-void					destroy_dongles(t_data *data, int destroy_lim);
-void					*init_dongles(t_data *data);
+ssize_t	get_time_diff(ssize_t start_time);
+void	print_lock(t_data *data, char *fmt, ...);
+ssize_t	get_time(void);
 #endif
