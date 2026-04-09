@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -pthread
+CFLAGS = -Wall -Wextra -Werror -pthread -MMD -MP
 NAME = codexion
 INCLUDES = coders
 
@@ -24,7 +24,6 @@ $(OBJ_DIR)%.o: %.c
 
 clean:
 	rm -rf $(OBJ_DIR)
-	rm -f $(DEP)
 
 fclean: clean
 	rm -f $(NAME)
@@ -34,4 +33,3 @@ re: fclean all
 .PHONY: all clean fclean re
 
 -include $(DEP)
-# todo: rebuild on header change
