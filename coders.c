@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 10:47:38 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/10 10:31:59 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/10 11:48:48 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ void	coder_compile(t_coder *coder)
 	request_dongles(coder);
 	print_lock(coder->data, "%ld %d has taken a dongle\n", coder->id);
 	print_lock(coder->data, "%ld %d has taken a dongle\n", coder->id);
+	coder->last_compile = get_time();
 	print_lock(coder->data, "%ld %d is compiling\n", coder->id);
 	codexion_sleep(data->parsed->time_to_compile, data);
 	coder->number_of_compilation += 1;
-	coder->last_compile = get_time();
 	release_dongles(coder);
 }
 
