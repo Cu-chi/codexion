@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 14:18:25 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/08 17:02:44 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/09 12:55:45 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,18 @@ ssize_t	get_time(void)
 	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * 1000000 + tv.tv_usec);
+	return ((tv.tv_sec * 1000000 + tv.tv_usec) / 1000);
 }
 
-ssize_t	get_time_diff(ssize_t start_time)
+ssize_t	get_time_diff(ssize_t time)
 {
-	return (get_time() - start_time);
+	return (get_time() - time);
 }
 
 void	print_lock(t_data *data, char *fmt, int coder_id)
 {
 	pthread_mutex_lock(&data->print);
-	printf(fmt, get_time_diff(data->start_time), coder_id);
+	if (!data->exit)
+		printf(fmt, get_time_diff(data->start_time), coder_id);
 	pthread_mutex_unlock(&data->print);
 }

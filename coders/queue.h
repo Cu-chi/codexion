@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dongles.h                                          :+:      :+:    :+:   */
+/*   queue.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/07 16:22:35 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/09 15:42:23 by equentin         ###   ########.fr       */
+/*   Created: 2026/04/09 14:54:21 by equentin          #+#    #+#             */
+/*   Updated: 2026/04/10 09:46:45 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DONGLES_H
-# define DONGLES_H
-# include "codexion.h"
-# include <pthread.h>
-# include <stdlib.h>
+#ifndef QUEUE_H
+# define QUEUE_H
 
 typedef struct s_data	t_data;
 typedef struct s_coder	t_coder;
 
-typedef struct s_dongle
+typedef struct s_queue
 {
-	long long			available_at;
-	int					in_use;
-	pthread_mutex_t		mutex;
-}						t_dongle;
+	void				*next;
+	t_coder				*coder;
+}						t_queue;
 
-void					destroy_dongles(t_data *data, int destroy_lim);
-void					*init_dongles(t_data *data);
-int						check_dongles_availability(t_coder *coder);
+int						enqueue(t_data *data, t_coder *coder);
+void					dequeue(t_data *data, t_coder *coder);
+int						is_priority_holder(t_data *data, t_coder *coder);
+void					request_dongles(t_coder *coder);
+void					release_dongles(t_coder *coder);
+
 #endif

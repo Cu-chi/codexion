@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -pthread -MMD -MP
+CFLAGS = -Wall -Wextra -Werror -pthread -MMD -MP -g
 NAME = codexion
 INCLUDES = coders
 
@@ -7,7 +7,8 @@ SRCS = main.c \
 	parsing.c \
 	dongles.c \
 	coders.c \
-	utils.c
+	utils.c \
+	queue.c
 OBJ_DIR = objs/
 OBJS =$(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
 DEP = $(OBJS:.o=.d)

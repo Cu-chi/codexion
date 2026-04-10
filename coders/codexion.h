@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 16:37:07 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/08 16:43:06 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/10 09:38:10 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include "coders.h"
 # include "dongles.h"
 # include "parsing.h"
+# include "queue.h"
 # include <sys/time.h>
 # include <pthread.h>
 # include <unistd.h>
@@ -29,6 +30,12 @@ typedef struct s_data
 	t_parsed			*parsed;
 	ssize_t				start_time;
 	pthread_mutex_t		print;
+	pthread_mutex_t		table_mutex;
+	pthread_cond_t		table_cond;
+	int					exit;
+	int					coder_finished;
+	int					coders_initialized;
+	t_queue				*queue;
 }						t_data;
 
 #endif

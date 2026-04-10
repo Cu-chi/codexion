@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 10:47:38 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/08 17:16:45 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/10 09:53:42 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,13 @@ void	coder_compile(t_coder *coder)
 	t_data	*data;
 
 	data = coder->data;
-	pthread_mutex_lock(&coder->dongle_left->mutex);
-	print_lock(data, "%ld %d has taken a dongle\n", coder->id);
-	pthread_mutex_lock(&coder->dongle_right->mutex);
-	print_lock(data, "%ld %d has taken a dongle\n", coder->id);
-	print_lock(data, "%ld %d is compiling\n", coder->id);
-	usleep(data->parsed->time_to_compile);
-	coder->last_compile = get_time();
+	request_dongles(coder);
+	print_lock(coder->data, "%ld %d has taken a dongle\n", coder->id);
+	print_lock(coder->data, "%ld %d has taken a dongle\n", coder->id);
+	print_lock(coder->data, "%ld %d is compiling\n", coder->id);
 	coder->number_of_compilation += 1;
-	pthread_mutex_unlock(&coder->dongle_left->mutex);
-	pthread_mutex_unlock(&coder->dongle_right->mutex);
+	usleep(data->parsed->time_to_compile * 1000);
+	release_dongles(coder);
 }
 
 void	coder_debug(t_coder *coder)
@@ -41,7 +38,7 @@ void	coder_debug(t_coder *coder)
 
 	data = coder->data;
 	print_lock(data, "%ld %d is debugging\n", coder->id);
-	usleep(data->parsed->time_to_debug);
+	usleep(data->parsed->time_to_debug * 1000);
 }
 
 void	coder_refactor(t_coder *coder)
@@ -50,22 +47,26 @@ void	coder_refactor(t_coder *coder)
 
 	data = coder->data;
 	print_lock(data, "%ld %d is refactoring\n", coder->id);
-	usleep(data->parsed->time_to_refactor);
+	usleep(data->parsed->time_to_refactor * 1000);
 }
 
 void	*coder_routine(void *coder_ptr)
 {
-	t_coder	*coder;
-	t_parsed *parsed;
+	t_coder		*coder;
+	t_parsed	*parsed;
 
 	coder = (t_coder *)coder_ptr;
 	parsed = coder->data->parsed;
-	while (coder->number_of_compilation < parsed->number_of_compiles_required)
+	coder->last_compile = get_time();
+	while (coder->number_of_compilation < parsed->number_of_compiles_required
+		&& !coder->data->exit)
 	{
 		coder_compile(coder);
 		coder_refactor(coder);
 		coder_debug(coder);
 	}
+	if (!coder->data->exit)
+		coder->data->coder_finished += 1;
 	return (NULL);
 }
 
