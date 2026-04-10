@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 14:18:25 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/09 12:55:45 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/10 10:32:20 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,13 @@ void	print_lock(t_data *data, char *fmt, int coder_id)
 	if (!data->exit)
 		printf(fmt, get_time_diff(data->start_time), coder_id);
 	pthread_mutex_unlock(&data->print);
+}
+
+void	codexion_sleep(int ms, t_data *data)
+{
+	int ms_waited;
+
+	ms_waited = 0;
+	while (ms_waited++ < ms && data->exit == 0)
+		usleep(1000);
 }

@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 10:47:38 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/10 09:53:42 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/10 10:31:59 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@ void	coder_compile(t_coder *coder)
 	print_lock(coder->data, "%ld %d has taken a dongle\n", coder->id);
 	print_lock(coder->data, "%ld %d has taken a dongle\n", coder->id);
 	print_lock(coder->data, "%ld %d is compiling\n", coder->id);
+	codexion_sleep(data->parsed->time_to_compile, data);
 	coder->number_of_compilation += 1;
-	usleep(data->parsed->time_to_compile * 1000);
+	coder->last_compile = get_time();
 	release_dongles(coder);
 }
 
@@ -38,7 +39,7 @@ void	coder_debug(t_coder *coder)
 
 	data = coder->data;
 	print_lock(data, "%ld %d is debugging\n", coder->id);
-	usleep(data->parsed->time_to_debug * 1000);
+	codexion_sleep(data->parsed->time_to_debug, data);
 }
 
 void	coder_refactor(t_coder *coder)
@@ -47,7 +48,7 @@ void	coder_refactor(t_coder *coder)
 
 	data = coder->data;
 	print_lock(data, "%ld %d is refactoring\n", coder->id);
-	usleep(data->parsed->time_to_refactor * 1000);
+	codexion_sleep(data->parsed->time_to_refactor, data);
 }
 
 void	*coder_routine(void *coder_ptr)
