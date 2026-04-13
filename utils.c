@@ -6,11 +6,12 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 14:18:25 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/13 10:02:52 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/13 13:20:36 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "coders/codexion.h"
+#include "coders/utils.h"
 #include <stdio.h>
 #include <sys/time.h>
 #include <unistd.h>
@@ -31,7 +32,7 @@ ssize_t	get_time_diff(ssize_t time)
 void	print_lock(t_data *data, char *fmt, int coder_id)
 {
 	pthread_mutex_lock(&data->print);
-	if (!data->exit)
+	if (!check_exit(data))
 		printf(fmt, get_time_diff(data->start_time), coder_id);
 	pthread_mutex_unlock(&data->print);
 }

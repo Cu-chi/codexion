@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 10:47:38 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/13 11:45:43 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/13 13:12:29 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,11 @@ void	coder_compile(t_coder *coder)
 
 	data = coder->data;
 	request_dongles(coder);
-	print_lock(coder->data, "%ld %d has taken a dongle\n", coder->id);
-	print_lock(coder->data, "%ld %d has taken a dongle\n", coder->id);
 	pthread_mutex_lock(&coder->mutex);
 	coder->last_compile = get_time();
 	pthread_mutex_unlock(&coder->mutex);
-
+	print_lock(coder->data, "%ld %d has taken a dongle\n", coder->id);
+	print_lock(coder->data, "%ld %d has taken a dongle\n", coder->id);
 	print_lock(coder->data, "%ld %d is compiling\n", coder->id);
 	codexion_sleep(data->parsed->time_to_compile, data);
 	pthread_mutex_lock(&coder->mutex);
@@ -67,13 +66,13 @@ void	*coder_routine(void *coder_ptr)
 	coder->last_compile = get_time();
 	pthread_mutex_unlock(&coder->mutex);
 	while (coder->number_of_compilation < parsed->number_of_compiles_required
-		&& !coder->data->exit)
+		&& !check_exit(coder->data))
 	{
 		coder_compile(coder);
 		coder_debug(coder);
 		coder_refactor(coder);
 	}
-	if (!coder->data->exit)
+	if (!check_exit(coder->data))
 	{
 		pthread_mutex_lock(&coder->data->finished_mutex);
 		coder->data->coder_finished += 1;

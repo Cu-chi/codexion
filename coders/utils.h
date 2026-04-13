@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 14:45:53 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/13 09:38:41 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/13 13:14:19 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,5 @@ ssize_t			get_time(void);
 struct timespec	get_target_timespec(int ms);
 void			codexion_sleep(int ms, t_data *data);
 void			lock_ordered(t_coder *coder);
+int				check_exit(t_data *data);
 #endif

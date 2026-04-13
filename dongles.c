@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 16:22:18 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/13 10:51:42 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/13 13:12:50 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	request_dongles(t_coder *coder)
 	data = coder->data;
 	pthread_mutex_lock(&data->table_mutex);
 	enqueue(data, coder);
-	while (data->exit == 0)
+	while (!check_exit(data))
 	{
 		if (is_priority_holder(data, coder) == 0)
 		{
@@ -68,16 +68,16 @@ void	request_dongles(t_coder *coder)
 		else
 			break ;
 	}
-	if (data->exit)
+	if (check_exit(data))
 	{
 		pthread_mutex_unlock(&data->table_mutex);
 		return ;
 	}
 	dequeue(data, coder);
-	pthread_mutex_unlock(&data->table_mutex);
 	lock_ordered(coder);
 	coder->dongle_left->in_use = 1;
 	coder->dongle_right->in_use = 1;
+	pthread_mutex_unlock(&data->table_mutex);
 }
 
 void	release_dongles(t_coder *coder)
