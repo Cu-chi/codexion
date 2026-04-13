@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 09:33:52 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/13 13:20:40 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/13 13:48:21 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,14 @@ int	check_exit(t_data *data)
 	exited = data->exit;
 	pthread_mutex_unlock(&data->exit_mutex);
 	return (exited);
+}
+
+int	check_finished(t_data *data)
+{
+	int	finished;
+
+	pthread_mutex_lock(&data->finished_mutex);
+	finished = data->coder_finished >= data->parsed->number_of_coders;
+	pthread_mutex_unlock(&data->finished_mutex);
+	return (finished);
 }

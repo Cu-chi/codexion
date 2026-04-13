@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 16:22:18 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/13 13:12:50 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/13 14:38:40 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,10 @@ void	request_dongles(t_coder *coder)
 		return ;
 	}
 	dequeue(data, coder);
-	lock_ordered(coder);
 	coder->dongle_left->in_use = 1;
 	coder->dongle_right->in_use = 1;
 	pthread_mutex_unlock(&data->table_mutex);
+	lock_ordered(coder);
 }
 
 void	release_dongles(t_coder *coder)

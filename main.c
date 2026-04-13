@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 11:06:59 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/13 13:20:46 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/13 14:36:36 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,21 @@ void	*monitor(void *data_ptr)
 	t_data	*data;
 	t_coder	*coder;
 	int		i;
+	int		coder_burned_out;
 
 	data = (t_data *)data_ptr;
-	while (!check_exit(data) && data->coder_finished < data->parsed->number_of_coders)
+	coder_burned_out = 0;
+	while (!check_exit(data) && !check_finished(data))
 	{
 		i = 0;
 		while (i++ < data->parsed->number_of_coders)
 		{
 			coder = &data->coders[i - 1];
-			if (coder->number_of_compilation < data->parsed->number_of_compiles_required
-				&& get_time_diff(coder->last_compile) > data->parsed->time_to_burnout)
+			pthread_mutex_lock(&coder->mutex);
+			coder_burned_out = coder->number_of_compilation < data->parsed->number_of_compiles_required
+				&& get_time_diff(coder->last_compile) > data->parsed->time_to_burnout;
+			pthread_mutex_unlock(&coder->mutex);
+			if (coder_burned_out)
 			{
 				print_lock(data, "%ld %d burned out\n", i);
 				pthread_mutex_lock(&data->exit_mutex);

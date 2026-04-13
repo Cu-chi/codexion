@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 14:18:25 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/13 13:20:36 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/13 13:36:30 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	codexion_sleep(int ms, t_data *data)
 
 	ms_waited = 0;
 	expires_at = get_time() + ms;
-	while (get_time() <= expires_at && data->exit == 0)
+	while (get_time() <= expires_at && !check_exit(data))
 		usleep(1000);
 }
 
