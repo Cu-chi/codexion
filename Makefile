@@ -8,6 +8,7 @@ SRCS = main.c \
 	dongles.c \
 	coders.c \
 	utils.c \
+	utils_second.c \
 	queue.c
 OBJ_DIR = objs/
 OBJS =$(addprefix $(OBJ_DIR), $(SRCS:.c=.o))

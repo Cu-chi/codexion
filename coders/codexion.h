@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 16:37:07 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/10 09:38:10 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/13 10:58:01 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_data
 	ssize_t				start_time;
 	pthread_mutex_t		print;
 	pthread_mutex_t		table_mutex;
+	pthread_mutex_t		finished_mutex;
 	pthread_cond_t		table_cond;
 	int					exit;
 	int					coder_finished;

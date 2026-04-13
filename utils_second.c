@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   utils_second.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/08 14:45:53 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/13 09:38:41 by equentin         ###   ########.fr       */
+/*   Created: 2026/04/13 09:33:52 by equentin          #+#    #+#             */
+/*   Updated: 2026/04/13 09:54:26 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
-# include <sys/time.h>
-# include <unistd.h>
+#include "coders/coders.h"
+#include <pthread.h>
 
-ssize_t			get_time_diff(ssize_t start_time);
-void			print_lock(t_data *data, char *fmt, int coder_id);
-ssize_t			get_time(void);
-struct timespec	get_target_timespec(int ms);
-void			codexion_sleep(int ms, t_data *data);
-void			lock_ordered(t_coder *coder);
-#endif
+void	lock_ordered(t_coder *coder)
+{
+	if (coder->dongle_left > coder->dongle_right)
+	{
+		pthread_mutex_lock(&coder->dongle_left->mutex);
+		pthread_mutex_lock(&coder->dongle_right->mutex);
+		return ;
+	}
+	pthread_mutex_lock(&coder->dongle_right->mutex);
+	pthread_mutex_lock(&coder->dongle_left->mutex);
+}

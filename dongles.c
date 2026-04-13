@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 16:22:18 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/10 10:53:36 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/13 10:51:42 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,24 @@
 int	check_dongles_availability(t_coder *coder)
 {
 	long	cur_time;
+	long	left_delay;
+	long	right_delay;
 
+	left_delay = 0;
+	right_delay = 0;
 	cur_time = get_time();
-	if (coder->dongle_left->in_use)
-		return (0);
-	if (coder->dongle_right->in_use)
+	if (coder->dongle_left->in_use || coder->dongle_right->in_use)
 		return (0);
 	if (coder->dongle_left->available_at > cur_time)
-		return (coder->dongle_right->available_at - cur_time);
+		left_delay = coder->dongle_left->available_at - cur_time;
 	if (coder->dongle_right->available_at > cur_time)
-		return (coder->dongle_right->available_at - cur_time);
+		right_delay = coder->dongle_right->available_at - cur_time;
+	if (left_delay > 0 || right_delay > 0)
+	{
+		if (left_delay > right_delay)
+			return (left_delay);
+		return (right_delay);
+	}
 	return (-1);
 }
 
@@ -36,24 +44,29 @@ void	request_dongles(t_coder *coder)
 {
 	t_data			*data;
 	struct timespec	target;
-	int				time_remaining;
+	int				wait_time;
 
 	data = coder->data;
 	pthread_mutex_lock(&data->table_mutex);
 	enqueue(data, coder);
-	while ((is_priority_holder(data, coder) == 0
-			|| check_dongles_availability(coder) == 0) && data->exit == 0)
-		pthread_cond_wait(&data->table_cond, &data->table_mutex);
-	time_remaining = check_dongles_availability(coder);
-	while (time_remaining > 0)
+	while (data->exit == 0)
 	{
-		time_remaining = check_dongles_availability(coder);
-		if (time_remaining > 0)
+		if (is_priority_holder(data, coder) == 0)
 		{
-			target = get_target_timespec(time_remaining);
+			pthread_cond_wait(&data->table_cond, &data->table_mutex);
+			continue ;
+		}
+		wait_time = check_dongles_availability(coder);
+		if (wait_time == 0)
+			pthread_cond_wait(&data->table_cond, &data->table_mutex);
+		else if (wait_time > 0)
+		{
+			target = get_target_timespec(wait_time);
 			pthread_cond_timedwait(&data->table_cond, &data->table_mutex,
 				&target);
 		}
+		else
+			break ;
 	}
 	if (data->exit)
 	{
@@ -61,9 +74,10 @@ void	request_dongles(t_coder *coder)
 		return ;
 	}
 	dequeue(data, coder);
+	pthread_mutex_unlock(&data->table_mutex);
+	lock_ordered(coder);
 	coder->dongle_left->in_use = 1;
 	coder->dongle_right->in_use = 1;
-	pthread_mutex_unlock(&data->table_mutex);
 }
 
 void	release_dongles(t_coder *coder)
@@ -78,6 +92,8 @@ void	release_dongles(t_coder *coder)
 	available_at = get_time() + data->parsed->dongle_cooldown;
 	coder->dongle_left->available_at = available_at;
 	coder->dongle_right->available_at = available_at;
+	pthread_mutex_unlock(&coder->dongle_left->mutex);
+	pthread_mutex_unlock(&coder->dongle_right->mutex);
 	pthread_cond_broadcast(&data->table_cond);
 	pthread_mutex_unlock(&data->table_mutex);
 }
