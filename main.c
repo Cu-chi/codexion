@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 11:06:59 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/13 11:43:55 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/13 13:02:39 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ void	*monitor(void *data_ptr)
 	int		i;
 
 	data = (t_data *)data_ptr;
-	while (!data->coders_initialized)
-		usleep(1);
 	while (!data->exit && data->coder_finished < data->parsed->number_of_coders)
 	{
 		i = 0;
@@ -84,7 +82,6 @@ int	main(int ac, char **av)
 	init_coders(&data);
 	data.start_time = get_time();
 	i = 0;
-	pthread_create(&monitor_thread, NULL, monitor, &data);
 	while (i < data.parsed->number_of_coders)
 	{
 		pthread_create(&data.coders[i].thread, NULL, coder_routine,
@@ -100,7 +97,7 @@ int	main(int ac, char **av)
 		usleep(1);
 		i += 2;
 	}
-	data.coders_initialized = 1;
+	pthread_create(&monitor_thread, NULL, monitor, &data);
 	i = 0;
 	while (i < data.parsed->number_of_coders)
 		pthread_join(data.coders[i++].thread, NULL);

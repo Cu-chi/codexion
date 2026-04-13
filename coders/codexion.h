@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 16:37:07 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/13 10:58:01 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/13 13:02:48 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ typedef struct s_data
 	pthread_cond_t		table_cond;
 	int					exit;
 	int					coder_finished;
-	int					coders_initialized;
 	t_queue				*queue;
 }						t_data;
 
