@@ -101,7 +101,7 @@ void	*init_coders(t_data *data)
 		data->coders[i].dongle_left = &data->dongles[left_dongle_index];
 		data->coders[i].dongle_right = &data->dongles[right_dongle_index];
 		data->coders[i].data = data;
-		left_dongle_index += left_dongle_index % data->parsed->number_of_coders;
+		left_dongle_index = (left_dongle_index + 1) % data->parsed->number_of_coders;
 		right_dongle_index++;
 		if (pthread_mutex_init(&data->coders[i].mutex, NULL) != 0)
 		{
