@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:56:52 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/10 10:10:37 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/13 15:40:15 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ int	enqueue(t_data *data, t_coder *coder)
 		return (0);
 	memset(enqueued, 0, sizeof(t_queue));
 	enqueued->coder = coder;
-    if (data->queue == NULL)
-    {
-        data->queue = enqueued;
-        return (1);
-    }
+	if (data->queue == NULL)
+	{
+		data->queue = enqueued;
+		return (1);
+	}
 	queue = data->queue;
 	while (queue && queue->next != NULL)
 		queue = queue->next;
@@ -61,8 +61,9 @@ void	dequeue(t_data *data, t_coder *coder)
 
 int	is_priority_holder(t_data *data, t_coder *coder)
 {
-	t_queue *queue = data->queue;
+	t_queue	*queue;
 
+	queue = data->queue;
 	if (queue == NULL)
 		return (0);
 	while (queue != NULL)

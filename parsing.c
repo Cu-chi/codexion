@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 12:48:27 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/08 12:52:41 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/13 15:39:47 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	validate(t_parsed *parsed)
 		|| parsed->dongle_cooldown <= 0)
 	{
 		fprintf(stderr,
-				"Invalid value(s), all values except scheduler must be integer "
-				"and greater than 0\n");
+			"Invalid value(s), all values except scheduler must be integer "
+			"and greater than 0\n");
 		return (1);
 	}
 	if (strcmp(parsed->scheduler, "fifo") != 0 && strcmp(parsed->scheduler,
@@ -44,11 +44,11 @@ int	parse(t_parsed *parsed, int ac, char **av)
 	if (ac != 9)
 	{
 		fprintf(stderr,
-				"Invalid format, expected:\n%s number_of_coders "
-				"time_to_burnout time_to_compile time_to_debug "
-				"time_to_refactor number_of_compiles_required "
-				"dongle_cooldown scheduler\n",
-				av[0]);
+			"Invalid format, expected:\n%s number_of_coders "
+			"time_to_burnout time_to_compile time_to_debug "
+			"time_to_refactor number_of_compiles_required "
+			"dongle_cooldown scheduler\n",
+			av[0]);
 		return (1);
 	}
 	parsed->number_of_coders = atoi(av[1]);

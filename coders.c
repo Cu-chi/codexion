@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 10:47:38 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/13 13:12:29 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/13 15:47:31 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,8 @@ void	*init_coders(t_data *data)
 		data->coders[i].dongle_left = &data->dongles[left_dongle_index];
 		data->coders[i].dongle_right = &data->dongles[right_dongle_index];
 		data->coders[i].data = data;
-		left_dongle_index++;
+		left_dongle_index += left_dongle_index % data->parsed->number_of_coders;
 		right_dongle_index++;
-		if (left_dongle_index >= data->parsed->number_of_coders)
-			left_dongle_index = 0;
 		if (pthread_mutex_init(&data->coders[i].mutex, NULL) != 0)
 		{
 			j = 0;
