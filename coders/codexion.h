@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 16:37:07 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/13 13:11:04 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/14 13:01:11 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct s_data
 	t_dongle			*dongles;
 	t_parsed			*parsed;
 	ssize_t				start_time;
-	pthread_mutex_t		print;
+	pthread_mutex_t		print_mutex;
 	pthread_mutex_t		table_mutex;
 	pthread_mutex_t		exit_mutex;
 	pthread_mutex_t		finished_mutex;

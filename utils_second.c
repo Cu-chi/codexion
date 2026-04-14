@@ -6,12 +6,13 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 09:33:52 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/13 13:48:21 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/14 13:00:31 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "coders/coders.h"
 #include "coders/codexion.h"
+#include "coders/utils.h"
 #include <pthread.h>
 
 void	lock_ordered(t_coder *coder)
@@ -44,4 +45,17 @@ int	check_finished(t_data *data)
 	finished = data->coder_finished >= data->parsed->number_of_coders;
 	pthread_mutex_unlock(&data->finished_mutex);
 	return (finished);
+}
+
+int	has_burned_out(t_coder *coder, t_parsed *parsed)
+{
+	int	coder_burned_out;
+
+	coder_burned_out = 0;
+	pthread_mutex_lock(&coder->mutex);
+	if (coder->number_of_compilation < parsed->number_of_compiles_required
+		&& get_time_diff(coder->last_compile) > parsed->time_to_burnout)
+		coder_burned_out = 1;
+	pthread_mutex_unlock(&coder->mutex);
+	return (coder_burned_out);
 }

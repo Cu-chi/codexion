@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 11:06:59 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/13 14:36:36 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/14 13:08:08 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,15 @@ void	*monitor(void *data_ptr)
 	t_data	*data;
 	t_coder	*coder;
 	int		i;
-	int		coder_burned_out;
 
 	data = (t_data *)data_ptr;
-	coder_burned_out = 0;
 	while (!check_exit(data) && !check_finished(data))
 	{
 		i = 0;
 		while (i++ < data->parsed->number_of_coders)
 		{
 			coder = &data->coders[i - 1];
-			pthread_mutex_lock(&coder->mutex);
-			coder_burned_out = coder->number_of_compilation < data->parsed->number_of_compiles_required
-				&& get_time_diff(coder->last_compile) > data->parsed->time_to_burnout;
-			pthread_mutex_unlock(&coder->mutex);
-			if (coder_burned_out)
+			if (has_burned_out(coder, data->parsed))
 			{
 				print_lock(data, "%ld %d burned out\n", i);
 				pthread_mutex_lock(&data->exit_mutex);
@@ -63,29 +57,29 @@ int	main(int ac, char **av)
 	if (parse(&parsed, ac, av))
 		return (1);
 	data.parsed = &parsed;
-	if (pthread_mutex_init(&data.print, NULL) != 0)
+	if (pthread_mutex_init(&data.print_mutex, NULL) != 0)
 		return (1);
 	if (pthread_mutex_init(&data.table_mutex, NULL) != 0)
 	{
-		pthread_mutex_destroy(&data.print);
+		pthread_mutex_destroy(&data.print_mutex);
 		return (1);
 	}
 	if (pthread_cond_init(&data.table_cond, NULL) != 0)
 	{
-		pthread_mutex_destroy(&data.print);
+		pthread_mutex_destroy(&data.print_mutex);
 		pthread_mutex_destroy(&data.table_mutex);
 		return (1);
 	}
 	if (pthread_mutex_init(&data.finished_mutex, NULL) != 0)
 	{
-		pthread_mutex_destroy(&data.print);
+		pthread_mutex_destroy(&data.print_mutex);
 		pthread_mutex_destroy(&data.table_mutex);
 		pthread_cond_destroy(&data.table_cond);
 		return (1);
 	}
 	if (pthread_mutex_init(&data.exit_mutex, NULL) != 0)
 	{
-		pthread_mutex_destroy(&data.print);
+		pthread_mutex_destroy(&data.print_mutex);
 		pthread_mutex_destroy(&data.finished_mutex);
 		pthread_mutex_destroy(&data.table_mutex);
 		pthread_cond_destroy(&data.table_cond);
@@ -117,7 +111,7 @@ int	main(int ac, char **av)
 	pthread_join(monitor_thread, NULL);
 	destroy_dongles(&data, data.parsed->number_of_dongles);
 	free(data.coders);
-	pthread_mutex_destroy(&data.print);
+	pthread_mutex_destroy(&data.print_mutex);
 	pthread_mutex_destroy(&data.table_mutex);
 	pthread_mutex_destroy(&data.finished_mutex);
 	pthread_mutex_destroy(&data.exit_mutex);
