@@ -38,7 +38,9 @@ void	*monitor(void *data_ptr)
 				pthread_mutex_lock(&data->exit_mutex);
 				data->exit = 1;
 				pthread_mutex_unlock(&data->exit_mutex);
+				pthread_mutex_lock(&data->table_mutex);
 				pthread_cond_broadcast(&data->table_cond);
+				pthread_mutex_unlock(&data->table_mutex);
 			}
 		}
 		usleep(1);
