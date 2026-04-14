@@ -7,6 +7,7 @@ SRCS = main.c \
 	parsing.c \
 	dongles.c \
 	coders.c \
+	coder_actions.c \
 	utils.c \
 	utils_second.c \
 	queue.c

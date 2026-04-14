@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 15:35:35 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/13 11:00:55 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/14 15:56:16 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,9 @@ typedef struct s_coder
 }						t_coder;
 
 void					*init_coders(t_data *data);
+void					*destroy_coders(t_data *data, int destroy_lim);
+void					coder_compile(t_coder *coder);
+void					coder_debug(t_coder *coder);
+void					coder_refactor(t_coder *coder);
 void					*coder_routine(void *coder_data_ptr);
 #endif
