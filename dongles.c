@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 16:22:18 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/13 14:38:40 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/14 16:11:44 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ void	destroy_dongles(t_data *data, int destroy_lim)
 	i = 0;
 	while (i < destroy_lim)
 		pthread_mutex_destroy(&data->dongles[i++].mutex);
-	i = 0;
 	free(data->dongles);
 }
 

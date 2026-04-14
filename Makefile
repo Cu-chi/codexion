@@ -10,7 +10,8 @@ SRCS = main.c \
 	coder_actions.c \
 	utils.c \
 	utils_second.c \
-	queue.c
+	queue.c \
+	mutexes.c
 OBJ_DIR = objs/
 OBJS =$(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
 DEP = $(OBJS:.o=.d)

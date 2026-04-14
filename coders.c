@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 10:47:38 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/14 13:43:30 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/14 16:03:42 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	*destroy_coders(t_data *data, int destroy_lim)
 	i = 0;
 	while (i < destroy_lim)
 		pthread_mutex_destroy(&data->coders[i++].mutex);
-	i = 0;
 	free(data->coders);
 	return (NULL);
 }

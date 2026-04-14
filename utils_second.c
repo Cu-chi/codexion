@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 09:33:52 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/14 13:42:17 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/14 16:35:04 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,11 @@ int	has_burned_out(t_coder *coder, t_parsed *parsed)
 
 	coder_burned_out = 0;
 	pthread_mutex_lock(&coder->mutex);
+	if (coder->last_compile == 0)
+	{
+		pthread_mutex_unlock(&coder->mutex);
+		return (0);
+	}
 	if (coder->number_of_compilation < parsed->number_of_compiles_required
 		&& get_time_diff(coder->last_compile) > parsed->time_to_burnout)
 		coder_burned_out = 1;
