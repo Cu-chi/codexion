@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/14 13:13:53 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/14 13:44:17 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/14 16:54:25 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	coder_compile(t_coder *coder)
 	t_data	*data;
 
 	data = coder->data;
-	request_dongles(coder);
+	if (!request_dongles(coder))
+		return ;
 	pthread_mutex_lock(&coder->mutex);
 	coder->last_compile = get_time();
 	pthread_mutex_unlock(&coder->mutex);

@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 11:06:59 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/14 16:42:31 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/15 10:19:43 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	main(int ac, char **av)
 	while (i < data.parsed->number_of_coders)
 		pthread_join(data.coders[i++].thread, NULL);
 	pthread_join(monitor_thread, NULL);
-	destroy_dongles(&data, data.parsed->number_of_dongles);
+	free(data.dongles);
 	destroy_coders(&data, data.parsed->number_of_coders);
 	destroy_mutex_cond(&data, 4, 1);
 	return (0);

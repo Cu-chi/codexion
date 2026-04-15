@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 14:45:53 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/14 13:00:28 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/14 16:51:20 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void			print_lock(t_data *data, char *fmt, int coder_id);
 ssize_t			get_time(void);
 struct timespec	get_target_timespec(int ms);
 void			codexion_sleep(int ms, t_data *data);
-void			lock_ordered(t_coder *coder);
 int				check_exit(t_data *data);
 int				check_finished(t_data *data);
 int				has_burned_out(t_coder *coder, t_parsed *parsed);

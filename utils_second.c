@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 09:33:52 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/14 16:35:04 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/14 16:51:14 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,6 @@
 #include "coders/codexion.h"
 #include "coders/utils.h"
 #include <pthread.h>
-
-void	lock_ordered(t_coder *coder)
-{
-	if (coder->dongle_left > coder->dongle_right)
-	{
-		pthread_mutex_lock(&coder->dongle_left->mutex);
-		pthread_mutex_lock(&coder->dongle_right->mutex);
-		return ;
-	}
-	pthread_mutex_lock(&coder->dongle_right->mutex);
-	pthread_mutex_lock(&coder->dongle_left->mutex);
-}
 
 int	check_exit(t_data *data)
 {

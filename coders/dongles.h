@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 16:22:35 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/14 13:37:24 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/14 16:55:44 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,8 @@ typedef struct s_dongle
 {
 	long long			available_at;
 	int					in_use;
-	pthread_mutex_t		mutex;
 }						t_dongle;
 
-void					destroy_dongles(t_data *data, int destroy_lim);
 void					*init_dongles(t_data *data);
 int						check_dongles_availability(t_coder *coder);
 #endif

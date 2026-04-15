@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 16:22:18 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/14 16:11:44 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/15 10:42:59 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "coders/dongles.h"
 #include "coders/queue.h"
 #include "coders/utils.h"
+#include <string.h>
 
 int	check_dongles_availability(t_coder *coder)
 {
@@ -40,7 +41,7 @@ int	check_dongles_availability(t_coder *coder)
 	return (-1);
 }
 
-void	request_dongles(t_coder *coder)
+int	request_dongles(t_coder *coder)
 {
 	t_data			*data;
 	struct timespec	target;
@@ -71,13 +72,13 @@ void	request_dongles(t_coder *coder)
 	if (check_exit(data))
 	{
 		pthread_mutex_unlock(&data->table_mutex);
-		return ;
+		return (0);
 	}
 	dequeue(data, coder);
 	coder->dongle_left->in_use = 1;
 	coder->dongle_right->in_use = 1;
 	pthread_mutex_unlock(&data->table_mutex);
-	lock_ordered(coder);
+	return (1);
 }
 
 void	release_dongles(t_coder *coder)
@@ -92,20 +93,8 @@ void	release_dongles(t_coder *coder)
 	available_at = get_time() + data->parsed->dongle_cooldown;
 	coder->dongle_left->available_at = available_at;
 	coder->dongle_right->available_at = available_at;
-	pthread_mutex_unlock(&coder->dongle_left->mutex);
-	pthread_mutex_unlock(&coder->dongle_right->mutex);
 	pthread_cond_broadcast(&data->table_cond);
 	pthread_mutex_unlock(&data->table_mutex);
-}
-
-void	destroy_dongles(t_data *data, int destroy_lim)
-{
-	int	i;
-
-	i = 0;
-	while (i < destroy_lim)
-		pthread_mutex_destroy(&data->dongles[i++].mutex);
-	free(data->dongles);
 }
 
 void	*init_dongles(t_data *data)
@@ -116,14 +105,6 @@ void	*init_dongles(t_data *data)
 	data->dongles = malloc(sizeof(t_dongle) * data->parsed->number_of_dongles);
 	if (data->dongles == NULL)
 		return (NULL);
-	while (i < (data->parsed->number_of_dongles))
-	{
-		if (pthread_mutex_init(&data->dongles[i].mutex, NULL) != 0)
-		{
-			destroy_dongles(data, i);
-			return (NULL);
-		}
-		i++;
-	}
+	memset(data->dongles, 0, sizeof(t_dongle) * data->parsed->number_of_dongles);
 	return (data->dongles);
 }
