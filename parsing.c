@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 12:48:27 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/13 15:39:47 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/15 16:26:34 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 int	validate(t_parsed *parsed)
 {
-	if (parsed->number_of_coders <= 0 || parsed->time_to_burnout <= 0
+	if (parsed->number_of_coders <= 1 || parsed->time_to_burnout <= 0
 		|| parsed->time_to_compile <= 0 || parsed->time_to_debug <= 0
 		|| parsed->time_to_refactor <= 0
 		|| parsed->number_of_compiles_required <= 0
@@ -25,7 +25,7 @@ int	validate(t_parsed *parsed)
 	{
 		fprintf(stderr,
 			"Invalid value(s), all values except scheduler must be integer "
-			"and greater than 0\n");
+			"and greater than 0, you must set at least 2 coders\n");
 		return (1);
 	}
 	if (strcmp(parsed->scheduler, "fifo") != 0 && strcmp(parsed->scheduler,
@@ -34,8 +34,6 @@ int	validate(t_parsed *parsed)
 		fprintf(stderr, "Invalid value, scheduler must be 'fifo' or 'edf'\n");
 		return (1);
 	}
-	parsed->number_of_dongles = parsed->number_of_coders
-		+ (parsed->number_of_coders == 1);
 	return (0);
 }
 

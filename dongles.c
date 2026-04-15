@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 16:22:18 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/15 16:02:55 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/15 16:26:30 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,9 @@ void	*init_dongles(t_data *data)
 	int	i;
 
 	i = 0;
-	data->dongles = malloc(sizeof(t_dongle) * data->parsed->number_of_dongles);
+	data->dongles = malloc(sizeof(t_dongle) * data->parsed->number_of_coders);
 	if (data->dongles == NULL)
 		return (NULL);
-	memset(data->dongles, 0, sizeof(t_dongle) * data->parsed->number_of_dongles);
+	memset(data->dongles, 0, sizeof(t_dongle) * data->parsed->number_of_coders);
 	return (data->dongles);
 }
