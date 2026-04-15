@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 11:06:59 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/15 11:00:58 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/15 15:57:55 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	create_coders(t_data *data, pthread_t *monitor_thread)
 	{
 		pthread_create(&data->coders[i].thread, NULL, coder_routine,
 			&data->coders[i]);
-		usleep(1);
 		i += 2;
 	}
 	i = 1;
@@ -65,7 +64,6 @@ int	create_coders(t_data *data, pthread_t *monitor_thread)
 	{
 		pthread_create(&data->coders[i].thread, NULL, coder_routine,
 			&data->coders[i]);
-		usleep(1);
 		i += 2;
 	}
 	pthread_create(monitor_thread, NULL, monitor, data);

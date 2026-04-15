@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 16:37:07 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/14 16:17:59 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/15 16:01:38 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct s_data
 	t_coder				*coders;
 	t_dongle			*dongles;
 	t_parsed			*parsed;
-	ssize_t				start_time;
+	long				start_time;
 	pthread_mutex_t		print_mutex;
 	pthread_mutex_t		table_mutex;
 	pthread_mutex_t		exit_mutex;

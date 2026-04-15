@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 14:45:53 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/14 16:51:20 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/15 16:06:05 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,9 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-ssize_t			get_time_diff(ssize_t start_time);
+long			get_time_diff(long start_time);
 void			print_lock(t_data *data, char *fmt, int coder_id);
-ssize_t			get_time(void);
-struct timespec	get_target_timespec(int ms);
+long			get_time(void);
 void			codexion_sleep(int ms, t_data *data);
 int				check_exit(t_data *data);
 int				check_finished(t_data *data);
