@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:56:52 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/13 15:40:15 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/15 11:01:22 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,14 @@ int	is_priority_holder(t_data *data, t_coder *coder)
 		queue = queue->next;
 	}
 	return (0);
+}
+
+void	free_queue(t_queue *queue)
+{
+	while (queue)
+	{
+		t_queue	*current = queue;
+		queue = current->next;
+		free(current);
+	}
 }

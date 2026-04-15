@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 16:22:35 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/14 16:55:44 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/15 11:05:58 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,6 @@ typedef struct s_dongle
 
 void					*init_dongles(t_data *data);
 int						check_dongles_availability(t_coder *coder);
+int						request_dongles(t_coder *coder);
+void					release_dongles(t_coder *coder);
 #endif
