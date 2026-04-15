@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 11:06:59 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/15 16:53:20 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/15 17:34:03 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	*monitor(void *data_ptr)
 				return (NULL);
 			}
 		}
-		usleep(0);
+		usleep(100);
 	}
 	return (NULL);
 }
