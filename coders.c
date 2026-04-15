@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 10:47:38 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/14 16:03:42 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/15 14:09:36 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	*coder_routine(void *coder_ptr)
 		&& !check_exit(coder->data))
 	{
 		coder_compile(coder);
+		if (check_exit(coder->data))
+			return (NULL);
 		coder_debug(coder);
 		coder_refactor(coder);
 	}

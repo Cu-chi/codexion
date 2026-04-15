@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/14 13:13:53 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/14 16:54:25 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/15 14:06:22 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	coder_compile(t_coder *coder)
 	print_lock(coder->data, "%ld %d has taken a dongle\n", coder->id);
 	print_lock(coder->data, "%ld %d is compiling\n", coder->id);
 	codexion_sleep(data->parsed->time_to_compile, data);
+	if (check_exit(data))
+		return ;
 	pthread_mutex_lock(&coder->mutex);
 	coder->number_of_compilation += 1;
 	pthread_mutex_unlock(&coder->mutex);
