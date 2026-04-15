@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 14:18:25 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/15 16:06:09 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/15 16:40:40 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ long	get_time_diff(long time)
 	return (get_time() - time);
 }
 
-void	print_lock(t_data *data, char *fmt, int coder_id)
+void	print_lock(t_data *data, char *fmt, int coder_id, int force)
 {
 	pthread_mutex_lock(&data->print_mutex);
-	if (!check_exit(data))
+	if (!check_exit(data) || force)
 		printf(fmt, get_time_diff(data->start_time), coder_id);
 	pthread_mutex_unlock(&data->print_mutex);
 }

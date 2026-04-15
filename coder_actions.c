@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/14 13:13:53 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/15 14:06:22 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/15 16:40:05 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void	coder_compile(t_coder *coder)
 	pthread_mutex_lock(&coder->mutex);
 	coder->last_compile = get_time();
 	pthread_mutex_unlock(&coder->mutex);
-	print_lock(coder->data, "%ld %d has taken a dongle\n", coder->id);
-	print_lock(coder->data, "%ld %d has taken a dongle\n", coder->id);
-	print_lock(coder->data, "%ld %d is compiling\n", coder->id);
+	print_lock(coder->data, "%ld %d has taken a dongle\n", coder->id, 0);
+	print_lock(coder->data, "%ld %d has taken a dongle\n", coder->id, 0);
+	print_lock(coder->data, "%ld %d is compiling\n", coder->id, 0);
 	codexion_sleep(data->parsed->time_to_compile, data);
 	if (check_exit(data))
 		return ;
@@ -41,7 +41,7 @@ void	coder_debug(t_coder *coder)
 	t_data	*data;
 
 	data = coder->data;
-	print_lock(data, "%ld %d is debugging\n", coder->id);
+	print_lock(data, "%ld %d is debugging\n", coder->id, 0);
 	codexion_sleep(data->parsed->time_to_debug, data);
 }
 
@@ -50,6 +50,6 @@ void	coder_refactor(t_coder *coder)
 	t_data	*data;
 
 	data = coder->data;
-	print_lock(data, "%ld %d is refactoring\n", coder->id);
+	print_lock(data, "%ld %d is refactoring\n", coder->id, 0);
 	codexion_sleep(data->parsed->time_to_refactor, data);
 }

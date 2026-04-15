@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 15:35:35 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/14 15:56:16 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/15 16:32:28 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ typedef struct s_data	t_data;
 typedef struct s_coder
 {
 	int					id;
-	size_t				last_compile;
+	long				last_compile;
 	int					number_of_compilation;
 	t_dongle			*dongle_left;
 	t_dongle			*dongle_right;

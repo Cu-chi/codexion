@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 11:06:59 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/15 15:57:55 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/15 16:53:20 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,24 @@ void	*monitor(void *data_ptr)
 	int		i;
 
 	data = (t_data *)data_ptr;
-	while (!check_exit(data) && !check_finished(data))
+	while (!check_finished(data))
 	{
 		i = 0;
 		while (i++ < data->parsed->number_of_coders)
 		{
 			if (has_burned_out(&data->coders[i - 1], data->parsed))
 			{
-				print_lock(data, "%ld %d burned out\n", i);
 				pthread_mutex_lock(&data->exit_mutex);
 				data->exit = 1;
 				pthread_mutex_unlock(&data->exit_mutex);
 				pthread_mutex_lock(&data->table_mutex);
 				pthread_cond_broadcast(&data->table_cond);
 				pthread_mutex_unlock(&data->table_mutex);
+				print_lock(data, "%ld %d burned out\n", i, 1);
 				return (NULL);
 			}
 		}
-		usleep(1);
+		usleep(0);
 	}
 	return (NULL);
 }
@@ -60,6 +60,7 @@ int	create_coders(t_data *data, pthread_t *monitor_thread)
 		i += 2;
 	}
 	i = 1;
+	usleep(10);
 	while (i < data->parsed->number_of_coders)
 	{
 		pthread_create(&data->coders[i].thread, NULL, coder_routine,
