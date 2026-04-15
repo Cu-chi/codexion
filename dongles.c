@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 16:22:18 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/15 10:42:59 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/15 16:02:55 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	check_dongles_availability(t_coder *coder)
 int	request_dongles(t_coder *coder)
 {
 	t_data			*data;
-	struct timespec	target;
 	int				wait_time;
 
 	data = coder->data;
@@ -62,9 +61,9 @@ int	request_dongles(t_coder *coder)
 			pthread_cond_wait(&data->table_cond, &data->table_mutex);
 		else if (wait_time > 0)
 		{
-			target = get_target_timespec(wait_time);
-			pthread_cond_timedwait(&data->table_cond, &data->table_mutex,
-				&target);
+			pthread_mutex_unlock(&data->table_mutex);
+			codexion_sleep(wait_time, data);
+			pthread_mutex_lock(&data->table_mutex);
 		}
 		else
 			break ;
