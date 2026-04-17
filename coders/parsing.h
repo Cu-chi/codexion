@@ -6,12 +6,14 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 12:48:39 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/15 16:26:37 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/17 11:40:20 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
+
+typedef struct s_data	t_data;
 
 typedef struct s_parsed
 {
@@ -25,5 +27,5 @@ typedef struct s_parsed
 	char	*scheduler;
 }			t_parsed;
 
-int			parse(t_parsed *parsed, int ac, char **av);
+int			parse(t_data *data, int ac, char **av);
 #endif

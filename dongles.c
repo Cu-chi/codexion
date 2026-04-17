@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 16:22:18 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/15 16:26:30 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/17 14:07:18 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,10 @@ int	check_dongles_availability(t_coder *coder)
 	return (-1);
 }
 
-int	request_dongles(t_coder *coder)
+void	wait_priority(t_coder *coder, t_data *data)
 {
-	t_data			*data;
-	int				wait_time;
+	int	wait_time;
 
-	data = coder->data;
-	pthread_mutex_lock(&data->table_mutex);
-	enqueue(data, coder);
 	while (!check_exit(data))
 	{
 		if (is_priority_holder(data, coder) == 0)
@@ -68,6 +64,16 @@ int	request_dongles(t_coder *coder)
 		else
 			break ;
 	}
+}
+
+int	request_dongles(t_coder *coder)
+{
+	t_data	*data;
+
+	data = coder->data;
+	pthread_mutex_lock(&data->table_mutex);
+	enqueue(data, coder);
+	wait_priority(coder, data);
 	if (check_exit(data))
 	{
 		pthread_mutex_unlock(&data->table_mutex);
@@ -89,21 +95,21 @@ void	release_dongles(t_coder *coder)
 	pthread_mutex_lock(&data->table_mutex);
 	coder->dongle_left->in_use = 0;
 	coder->dongle_right->in_use = 0;
-	available_at = get_time() + data->parsed->dongle_cooldown;
+	available_at = get_time() + data->parsed.dongle_cooldown;
 	coder->dongle_left->available_at = available_at;
 	coder->dongle_right->available_at = available_at;
 	pthread_cond_broadcast(&data->table_cond);
 	pthread_mutex_unlock(&data->table_mutex);
 }
 
-void	*init_dongles(t_data *data)
+int	init_dongles(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	data->dongles = malloc(sizeof(t_dongle) * data->parsed->number_of_coders);
+	data->dongles = malloc(sizeof(t_dongle) * data->parsed.number_of_coders);
 	if (data->dongles == NULL)
-		return (NULL);
-	memset(data->dongles, 0, sizeof(t_dongle) * data->parsed->number_of_coders);
-	return (data->dongles);
+		return (1);
+	memset(data->dongles, 0, sizeof(t_dongle) * data->parsed.number_of_coders);
+	return (0);
 }

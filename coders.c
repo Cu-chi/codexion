@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 10:47:38 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/15 17:24:28 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/17 11:58:00 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@
 #include <string.h>
 #include <unistd.h>
 
+void	coder_finished(t_coder *coder)
+{
+	pthread_mutex_lock(&coder->data->finished_mutex);
+	coder->data->coder_finished += 1;
+	pthread_mutex_unlock(&coder->data->finished_mutex);
+}
+
 void	*coder_routine(void *coder_ptr)
 {
 	t_coder		*coder;
@@ -27,12 +34,12 @@ void	*coder_routine(void *coder_ptr)
 	pthread_mutex_lock(&coder->mutex);
 	coder->last_compile = get_time();
 	pthread_mutex_unlock(&coder->mutex);
-	parsed = coder->data->parsed;
+	parsed = &coder->data->parsed;
 	if (parsed->number_of_coders == 1)
-    {
-        print_lock(coder->data, "%ld %d has taken a dongle\n", coder->id, 0);
-        return (NULL);
-    }
+	{
+		print_lock(coder->data, "%ld %d has taken a dongle\n", coder->id, 0);
+		return (NULL);
+	}
 	while (coder->number_of_compilation < parsed->number_of_compiles_required
 		&& !check_exit(coder->data))
 	{
@@ -43,15 +50,11 @@ void	*coder_routine(void *coder_ptr)
 		coder_refactor(coder);
 	}
 	if (!check_exit(coder->data))
-	{
-		pthread_mutex_lock(&coder->data->finished_mutex);
-		coder->data->coder_finished += 1;
-		pthread_mutex_unlock(&coder->data->finished_mutex);
-	}
+		coder_finished(coder);
 	return (NULL);
 }
 
-void	*destroy_coders(t_data *data, int destroy_lim)
+int	destroy_coders(t_data *data, int destroy_lim)
 {
 	int	i;
 
@@ -59,34 +62,34 @@ void	*destroy_coders(t_data *data, int destroy_lim)
 	while (i < destroy_lim)
 		pthread_mutex_destroy(&data->coders[i++].mutex);
 	free(data->coders);
-	return (NULL);
+	return (1);
 }
 
-void	*init_coders(t_data *data)
+int	init_coders(t_data *data)
 {
 	int	i;
 	int	left_dongle_index;
 	int	right_dongle_index;
 
 	i = 0;
-	left_dongle_index = data->parsed->number_of_coders - 1;
+	left_dongle_index = data->parsed.number_of_coders - 1;
 	right_dongle_index = 0;
-	data->coders = malloc(sizeof(t_coder) * data->parsed->number_of_coders);
+	data->coders = malloc(sizeof(t_coder) * data->parsed.number_of_coders);
 	if (data->coders == NULL)
-		return (NULL);
-	memset(data->coders, 0, sizeof(t_coder) * data->parsed->number_of_coders);
-	while (i < data->parsed->number_of_coders)
+		return (1);
+	memset(data->coders, 0, sizeof(t_coder) * data->parsed.number_of_coders);
+	while (i < data->parsed.number_of_coders)
 	{
 		data->coders[i].id = i + 1;
 		data->coders[i].dongle_left = &data->dongles[left_dongle_index];
 		data->coders[i].dongle_right = &data->dongles[right_dongle_index];
 		data->coders[i].data = data;
 		left_dongle_index = (left_dongle_index + 1)
-			% data->parsed->number_of_coders;
+			% data->parsed.number_of_coders;
 		right_dongle_index++;
 		if (pthread_mutex_init(&data->coders[i].mutex, NULL) != 0)
 			return (destroy_coders(data, i));
 		i++;
 	}
-	return (data->coders);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:56:52 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/15 11:01:22 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/17 11:55:08 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,11 @@ int	is_priority_holder(t_data *data, t_coder *coder)
 
 void	free_queue(t_queue *queue)
 {
+	t_queue	*current;
+
 	while (queue)
 	{
-		t_queue	*current = queue;
+		current = queue;
 		queue = current->next;
 		free(current);
 	}
