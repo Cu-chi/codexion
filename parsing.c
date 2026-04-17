@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 12:48:27 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/17 14:56:57 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/17 19:05:54 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int	validate(t_parsed *parsed)
 		|| parsed->number_of_compiles_required < 0
 		|| parsed->dongle_cooldown < 0)
 	{
-		fprintf(stderr,
-			"Invalid value(s), all values except scheduler must be positive integer, "
-			"number_of_coders and time_to_burnout must be greater than 0\n");
+		fprintf(stderr, "Invalid value(s), all values except scheduler must be "
+			"positive integer, number_of_coders and time_to_burnout must be"
+			" greater than 0\n");
 		return (1);
 	}
 	if (strcmp(parsed->scheduler, "fifo") != 0 && strcmp(parsed->scheduler,

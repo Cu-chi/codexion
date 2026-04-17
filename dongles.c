@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 16:22:18 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/17 14:07:18 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/17 18:58:32 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	request_dongles(t_coder *coder)
 
 	data = coder->data;
 	pthread_mutex_lock(&data->table_mutex);
-	enqueue(data, coder);
+	enqueue(data, coder); // TODO: protect malloc fail
 	wait_priority(coder, data);
 	if (check_exit(data))
 	{

@@ -6,17 +6,17 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:56:52 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/17 11:55:08 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/17 19:03:21 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "coders/codexion.h"
 #include "coders/queue.h"
+#include "coders/utils.h"
 #include <string.h>
 
 int	enqueue(t_data *data, t_coder *coder)
 {
-	t_queue	*queue;
 	t_queue	*enqueued;
 
 	enqueued = malloc(sizeof(t_queue));
@@ -29,10 +29,10 @@ int	enqueue(t_data *data, t_coder *coder)
 		data->queue = enqueued;
 		return (1);
 	}
-	queue = data->queue;
-	while (queue && queue->next != NULL)
-		queue = queue->next;
-	queue->next = enqueued;
+	if (data->parsed.scheduler[0] == 'f')
+		insert_fifo(data, enqueued);
+	else
+		insert_edf(data, enqueued);
 	return (1);
 }
 
@@ -70,13 +70,7 @@ int	is_priority_holder(t_data *data, t_coder *coder)
 	{
 		if (queue->coder == coder)
 			return (1);
-		if (queue->coder->dongle_left == coder->dongle_right)
-			return (0);
-		if (queue->coder->dongle_right == coder->dongle_left)
-			return (0);
-		if (queue->coder->dongle_left == coder->dongle_left)
-			return (0);
-		if (queue->coder->dongle_right == coder->dongle_right)
+		if (have_same_dongle(queue->coder, coder))
 			return (0);
 		queue = queue->next;
 	}
