@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 10:47:38 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/20 11:30:02 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/20 13:35:14 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	*coder_routine(void *coder_ptr)
 	coder->last_compile = coder->data->start_time;
 	pthread_mutex_unlock(&coder->mutex);
 	parsed = &coder->data->parsed;
-	if (parsed->number_of_coders == 1)
+	if (parsed->number_of_coders == 1 && parsed->number_of_compiles_required)
 	{
 		print_lock(coder->data, "%ld %d has taken a dongle\n", coder->id, 0);
 		return (NULL);
