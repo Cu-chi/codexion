@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 16:22:18 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/20 11:13:28 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/20 11:27:21 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "coders/queue.h"
 #include "coders/utils.h"
 #include <string.h>
+#include <stdlib.h>
 
 int	check_dongles_availability(t_coder *coder)
 {

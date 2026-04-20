@@ -6,15 +6,13 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 16:22:35 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/17 11:49:53 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/20 11:26:50 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DONGLES_H
 # define DONGLES_H
 # include "codexion.h"
-# include <pthread.h>
-# include <stdlib.h>
 
 typedef struct s_data	t_data;
 typedef struct s_coder	t_coder;

@@ -6,11 +6,12 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/14 13:49:14 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/14 16:18:32 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/20 11:31:08 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "coders/codexion.h"
+#include <pthread.h>
 
 int	destroy_mutex_cond(t_data *data, int destroy_lim, int cond)
 {

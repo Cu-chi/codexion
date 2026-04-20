@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 10:47:38 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/20 11:16:39 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/20 11:30:02 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 #include "coders/codexion.h"
 #include "coders/dongles.h"
 #include "coders/utils.h"
-#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 
 void	coder_finished(t_coder *coder)
 {

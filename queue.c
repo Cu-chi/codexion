@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:56:52 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/17 19:03:21 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/20 11:27:41 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "coders/queue.h"
 #include "coders/utils.h"
 #include <string.h>
+#include <stdlib.h>
 
 int	enqueue(t_data *data, t_coder *coder)
 {

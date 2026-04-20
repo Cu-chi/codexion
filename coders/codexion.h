@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 16:37:07 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/17 11:46:10 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/20 11:28:04 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@
 # include "dongles.h"
 # include "parsing.h"
 # include "queue.h"
-# include <sys/time.h>
 # include <pthread.h>
-# include <unistd.h>
 
 typedef struct s_coder	t_coder;
 typedef struct s_dongle	t_dongle;

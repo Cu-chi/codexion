@@ -6,13 +6,14 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/14 13:13:53 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/17 11:55:02 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/20 11:29:39 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "coders/coders.h"
 #include "coders/codexion.h"
 #include "coders/utils.h"
+#include <pthread.h>
 
 void	coder_compile(t_coder *coder)
 {

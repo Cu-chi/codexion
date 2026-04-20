@@ -6,14 +6,12 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 14:45:53 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/17 18:02:29 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/20 11:25:15 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_H
 # define UTILS_H
-# include <sys/time.h>
-# include <unistd.h>
 
 long	get_time_diff(long start_time);
 void	print_lock(t_data *data, char *fmt, int coder_id, int force);
