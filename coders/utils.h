@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 14:45:53 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/20 11:25:15 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/20 15:17:16 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,5 @@ int		check_exit(t_data *data);
 int		check_finished(t_data *data);
 int		has_burned_out(t_coder *coder, t_parsed *parsed);
 int		have_same_dongle(t_coder *coder1, t_coder *coder2);
+void	send_exit(t_data *data);
 #endif

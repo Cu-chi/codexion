@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 11:06:59 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/20 11:26:37 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/20 15:26:09 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,7 @@ void	*monitor(void *data_ptr)
 		{
 			if (has_burned_out(&data->coders[i - 1], &data->parsed))
 			{
-				pthread_mutex_lock(&data->exit_mutex);
-				data->exit = 1;
-				pthread_mutex_unlock(&data->exit_mutex);
-				pthread_mutex_lock(&data->table_mutex);
-				pthread_cond_broadcast(&data->table_cond);
-				pthread_mutex_unlock(&data->table_mutex);
+				send_exit(data);
 				print_lock(data, "%ld %d burned out\n", i, 1);
 				return (NULL);
 			}
@@ -53,28 +48,29 @@ int	create_coders(t_data *data, pthread_t *monitor_thread)
 {
 	int	i;
 	int	init_res;
+	int	tmp_init_res;
 
 	i = 0;
+	init_res = 0;
 	while (i < data->parsed.number_of_coders)
 	{
-		init_res = pthread_create(&data->coders[i].thread, NULL, coder_routine,
-				&data->coders[i]);
-		if (init_res)
-			return (1);
+		tmp_init_res = pthread_create(&data->coders[i].thread, NULL,
+				coder_routine, &data->coders[i]);
+		init_res = tmp_init_res != init_res || init_res != 0;
 		i += 2;
 	}
 	i = 1;
 	usleep(10);
 	while (i < data->parsed.number_of_coders)
 	{
-		init_res = pthread_create(&data->coders[i].thread, NULL, coder_routine,
-				&data->coders[i]);
-		if (init_res)
-			return (1);
+		tmp_init_res = pthread_create(&data->coders[i].thread, NULL,
+				coder_routine, &data->coders[i]);
+		init_res = tmp_init_res != init_res || init_res != 0;
 		i += 2;
 	}
-	pthread_create(monitor_thread, NULL, monitor, data);
-	return (0);
+	tmp_init_res = pthread_create(monitor_thread, NULL, monitor, data);
+	init_res = tmp_init_res != init_res || init_res != 0;
+	return (init_res);
 }
 
 void	destroy_all(t_data *data)
@@ -121,12 +117,12 @@ int	main(int ac, char **av)
 	if (create_coders(&data, &monitor_thread))
 	{
 		fprintf(stderr, "an error occured at coders initialization\n");
-		destroy_all(&data);
-		return (1);
+		send_exit(&data);
 	}
 	i = 0;
 	while (i < data.parsed.number_of_coders)
-		pthread_join(data.coders[i++].thread, NULL);
+		if (data.coders[i].thread)
+			pthread_join(data.coders[i++].thread, NULL);
 	pthread_join(monitor_thread, NULL);
 	destroy_all(&data);
 	return (0);

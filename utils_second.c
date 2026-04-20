@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 09:33:52 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/17 11:47:14 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/20 15:17:00 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,14 @@ int	has_burned_out(t_coder *coder, t_parsed *parsed)
 		coder_burned_out = 1;
 	pthread_mutex_unlock(&coder->mutex);
 	return (coder_burned_out);
+}
+
+void	send_exit(t_data *data)
+{
+	pthread_mutex_lock(&data->exit_mutex);
+	data->exit = 1;
+	pthread_mutex_unlock(&data->exit_mutex);
+	pthread_mutex_lock(&data->table_mutex);
+	pthread_cond_broadcast(&data->table_cond);
+	pthread_mutex_unlock(&data->table_mutex);
 }
