@@ -11,7 +11,7 @@ SRCS = main.c \
 	utils.c \
 	utils_second.c \
 	queue.c \
-	queue_schedulers.c \
+	schedulers.c.c \
 	mutexes.c
 OBJ_DIR = objs/
 OBJS =$(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
