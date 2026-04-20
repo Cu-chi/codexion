@@ -1,17 +1,18 @@
 *This project has been created as part of the 42 curriculum by equentin*
-# Description
-Inspired by the Philosophers' Dinner, the goal is to build a concurrent simulation using threads.  
-N coders in circle with N dongles between them, to compile, a coder needs two adjacent dongles (left and right) and must wait after dongles are released on the table (cooldown).
 
-Life cycle:  
-Wait 2 dongles → Compile → Release → Debug → Refactor → Repeat
+# Description
+Inspired by the **Dining Philosophers problem**, the goal is to build a concurrent simulation using threads.  
+**N coders** are sitting in a circle with **N dongles** between them. To compile, a coder needs two adjacent dongles (left and right). Once the dongles are released, they remain on the table for a short period (cooldown) before they can be used again.
+
+**Life cycle:** Wait for 2 dongles → Compile → Release → Debug → Refactor → Repeat
+
 # Instructions
-to build the project, run
+To build the project, run:
 ```bash
 make
 ```
 
-to run the program, run
+To run the program, use the following syntax:
 ```bash
 ./codexion [number_of_coders] [time_to_burnout] [time_to_compile] [time_to_debug]
 [time_to_refactor] [number_of_compiles_required] [dongle_cooldown] [scheduler]
@@ -25,24 +26,24 @@ to run the program, run
 - `dongle_cooldown`: >= 0
 - `scheduler`: 'fifo' or 'edf'
 
-### schedulers
-#### fifo
-First In First Out, the dongles are given to the first who requested
+### Schedulers
+#### FIFO (First In First Out)
+Dongles are assigned to the first coder who requested them.
 
-#### edf
-Earliest Deadline First, the dongles are given to the one who has the earliest deadline (last_compile_start + time_to_burnout)
+#### EDF (Earliest Deadline First)
+Dongles are assigned to the coder with the earliest deadline, calculated as: (last_compile_start + time_to_burnout)
 
-to clean objects files and other build files, run
+To remove object files and other build artifacts:
 ```bash
 make clean
 ```
 
-to clean objects files, other build files **and** the executable, run
+To remove object files, build artifacts, and the executable:
 ```bash
 make fclean
 ```
 
-to re-build the project, run
+To re-build the project:
 ```bash
 make re
 ```
@@ -52,33 +53,28 @@ https://www.geeksforgeeks.org/c/thread-functions-in-c-c/
 https://tala-informatique.fr/index.php?title=C_pthread  
 https://www.ibm.com/docs/fr/aix/7.3.0?topic=p-pthread-mutex-init-pthread-mutex-destroy-subroutine
 
-AI usage: helgrind error explanation, pthread cond explanation and usage example.
-Good practice and code review. Decision assistant. Correction of English spelling mistakes in this text.
+AI usage: Helgrind error explanations, pthread_cond usage examples, general best practices, and English proofreading.
 
 # Blocking cases handled
 ### Dongles
-for dongles, I have a function that manage who get the dongles using the queue. When a coder needs dongles, he is inserted in a queue using `fifo` or `edf`. When entering the function a variable is locked so no coder can take at the same time. It waits until coder is the first in the queue. If the dongles are not available, the coder wait using a `pthread_cond_wait` and if the dongle are in cooldown, it simply wait the timer to take dongles.  
+Dongle management is handled by a function that uses a queue. When a coder needs dongles, they are inserted into a queue based on the selected scheduler (`fifo` or `edf`). Access to the queue is protected by a mutex to prevent race conditions. The thread waits until the coder reaches the front of the queue. If the dongles are unavailable or in cooldown, the coder waits using `pthread_cond_wait` or a timer.
 
 ### Monitor
-the monitor loop on each coder every 100ns to check if they burned out or if everyone finished their compilations.
-So it always detects a burn out within 10ms
+The monitor loops through every coder every 100ns to check if anyone has burned out or if everyone has finished their required compilations. This ensures a burnout is detected within 10ms.
 
 ### Logs
-every print is surrounded by a mutex so each print is in order and when a burn out occurs, every prints are locked.
+Every print statement is protected by a mutex to ensure logs appear in the correct order. When a burnout occurs, all subsequent prints are locked to prevent further output.
 
 # Thread synchronization mechanisms
-**pthread_mutex_t**: a mutex can be locked and unlocked, when locked by a thread, any other thread can't lock it, using `pthread_mutex_lock`, `pthread_mutex_unlock`  
-A mutex must be initialized using `pthread_mutex_init` and destroyed using `pthread_mutex_destroy`.
+**pthread_mutex_t**: A mutex used to prevent simultaneous access to shared resources. Initialized with `pthread_mutex_init` and destroyed with `pthread_mutex_destroy`.
 
-**pthread_cond_t**: a cond can be broadcasted using `pthread_cond_broadcast`, all thread that were waiting on this cond (using `pthread_cond_wait`) will be waked up  
-A cond must be initialized using `pthread_cond_init` and destroyed using `pthread_cond_destroy`.
+**pthread_cond_t**: A condition variable used to wake up waiting threads. Use `pthread_cond_broadcast` to wake all threads waiting via `pthread_cond_wait`.
 
-**pthread_create**: is the function that creates the thread and executes it.
+**pthread_create**: The function that spawns and executes a new thread.
 
-**pthread_join**: this function will join the associated thread with the thread calling it, so if you join in main, the main will wait for the thread to return.
+**pthread_join**: Blocks the calling thread until the target thread terminates.
 ### how race conditions are prevented
-race conditions are prevented by using `pthread_mutex_lock` and `pthread_mutex_unlock` around shared data.
+Race conditions are prevented by wrapping all access to shared data with `pthread_mutex_lock` and `pthread_mutex_unlock`.
 
 ### how thread-safe communication is achieved
-thread-safe communication is achieved between coders and the
-monitor by using flag for exit and mutex around, so when a coder finish all needed compilation it he increases a counter that the monitor will check to detect when all coders ended their work. Same for the exit flag, coders check this flag to avoid doing action after the exit.
+Communication between coders and the monitor is achieved using an exit flag and shared counters, both protected by mutexes. When a coder finishes their required compilations, they increment a counter that the monitor tracks. Similarly, coders frequently check the exit flag to avoid performing actions after the simulation has ended.
