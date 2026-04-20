@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 11:06:59 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/17 11:47:01 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/20 11:09:35 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	*monitor(void *data_ptr)
 	int		i;
 
 	data = (t_data *)data_ptr;
-	while (!check_finished(data))
+	while (!check_finished(data) && !check_exit(data))
 	{
 		i = 0;
 		while (i++ < data->parsed.number_of_coders)

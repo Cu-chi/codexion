@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 10:47:38 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/17 11:58:00 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/20 11:09:24 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	*coder_routine(void *coder_ptr)
 
 	coder = (t_coder *)coder_ptr;
 	pthread_mutex_lock(&coder->mutex);
-	coder->last_compile = get_time();
+	coder->last_compile = get_time(); // replace by data start time
 	pthread_mutex_unlock(&coder->mutex);
 	parsed = &coder->data->parsed;
 	if (parsed->number_of_coders == 1)

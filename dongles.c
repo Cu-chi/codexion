@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 16:22:18 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/17 18:58:32 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/20 11:13:28 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,16 @@ int	request_dongles(t_coder *coder)
 
 	data = coder->data;
 	pthread_mutex_lock(&data->table_mutex);
-	enqueue(data, coder); // TODO: protect malloc fail
+	if (!enqueue(data, coder))
+	{
+		print_lock(data, "%ld %d failed to malloc, exiting\n", coder->id, 0);
+		pthread_mutex_lock(&data->exit_mutex);
+		data->exit = 1;
+		pthread_mutex_unlock(&data->exit_mutex);
+		pthread_cond_broadcast(&data->table_cond);
+		pthread_mutex_unlock(&data->table_mutex);
+		return (0);
+	}
 	wait_priority(coder, data);
 	if (check_exit(data))
 	{
