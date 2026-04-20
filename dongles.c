@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 16:22:18 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/20 11:27:21 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/20 11:34:32 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "coders/utils.h"
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 int	check_dongles_availability(t_coder *coder)
 {
@@ -75,7 +76,7 @@ int	request_dongles(t_coder *coder)
 	pthread_mutex_lock(&data->table_mutex);
 	if (!enqueue(data, coder))
 	{
-		print_lock(data, "%ld %d failed to malloc, exiting\n", coder->id, 0);
+		fprintf(stderr, "coder %d failed to malloc, exiting\n", coder->id);
 		pthread_mutex_lock(&data->exit_mutex);
 		data->exit = 1;
 		pthread_mutex_unlock(&data->exit_mutex);
