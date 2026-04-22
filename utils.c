@@ -6,10 +6,11 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 14:18:25 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/17 18:02:26 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/22 10:52:21 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#define _XOPEN_SOURCE 500
 #include "coders/codexion.h"
 #include "coders/utils.h"
 #include <stdio.h>

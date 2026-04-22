@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 16:37:07 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/20 11:28:04 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/22 10:51:11 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,9 @@
 # include "parsing.h"
 # include "queue.h"
 # include <pthread.h>
+# include "typedef.h"
 
-typedef struct s_coder	t_coder;
-typedef struct s_dongle	t_dongle;
-
-typedef struct s_data
+struct s_data
 {
 	t_coder				*coders;
 	t_dongle			*dongles;
@@ -36,6 +34,6 @@ typedef struct s_data
 	int					exit;
 	int					coder_finished;
 	t_queue				*queue;
-}						t_data;
+};
 
 #endif

@@ -6,21 +6,19 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/09 14:54:21 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/17 19:02:14 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/22 10:50:57 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef QUEUE_H
 # define QUEUE_H
+# include "typedef.h"
 
-typedef struct s_data	t_data;
-typedef struct s_coder	t_coder;
-
-typedef struct s_queue
+struct s_queue
 {
 	void				*next;
 	t_coder				*coder;
-}						t_queue;
+};
 
 int						enqueue(t_data *data, t_coder *coder);
 void					dequeue(t_data *data, t_coder *coder);

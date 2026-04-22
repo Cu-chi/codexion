@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -pthread -MMD -MP
+CFLAGS = -Wall -Wextra -Werror -pthread -MMD -MP -std=c89
 NAME = codexion
 INCLUDES = coders
 

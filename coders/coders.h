@@ -6,7 +6,7 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 15:35:35 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/17 11:51:51 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/22 10:50:46 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,9 @@
 # include "codexion.h"
 # include "dongles.h"
 # include <pthread.h>
+# include "typedef.h"
 
-typedef struct s_data	t_data;
-
-typedef struct s_coder
+struct s_coder
 {
 	int					id;
 	long				last_compile;
@@ -28,7 +27,7 @@ typedef struct s_coder
 	pthread_t			thread;
 	t_data				*data;
 	pthread_mutex_t		mutex;
-}						t_coder;
+};
 
 int						init_coders(t_data *data);
 int						destroy_coders(t_data *data, int destroy_lim);

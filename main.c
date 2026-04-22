@@ -6,10 +6,11 @@
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 11:06:59 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/20 15:26:09 by equentin         ###   ########.fr       */
+/*   Updated: 2026/04/22 10:51:51 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#define _XOPEN_SOURCE 500
 #include "coders/coders.h"
 #include "coders/codexion.h"
 #include "coders/dongles.h"

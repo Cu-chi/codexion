@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dongles.h                                          :+:      :+:    :+:   */
+/*   typedef.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: equentin <equentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/07 16:22:35 by equentin          #+#    #+#             */
-/*   Updated: 2026/04/22 10:51:06 by equentin         ###   ########.fr       */
+/*   Created: 2026/04/20 18:36:55 by equentin          #+#    #+#             */
+/*   Updated: 2026/04/20 18:39:28 by equentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DONGLES_H
-# define DONGLES_H
-# include "codexion.h"
-# include "typedef.h"
-
-struct s_dongle
-{
-	long long			available_at;
-	int					in_use;
-};
-
-int						init_dongles(t_data *data);
-int						check_dongles_availability(t_coder *coder);
-int						request_dongles(t_coder *coder);
-void					release_dongles(t_coder *coder);
+#ifndef TYPEDEF_H
+# define TYPEDEF_H
+typedef struct s_data	t_data;
+typedef struct s_coder	t_coder;
+typedef struct s_queue	t_queue;
+typedef struct s_dongle	t_dongle;
+typedef struct s_parsed	t_parsed;
 #endif
